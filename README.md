@@ -41,7 +41,7 @@ Ensure your Windows laptop is running Windows 10 or higher.
 Verify that your laptop meets the minimum graphics card requirements for the game.
 ## Steps to Install DIMENS111ON:
 #### Download the Game:
-Visit [website URL or platform where the game is hosted].
+Visit www.D1M3NS111ON.com
 Click on the download link for Windows.
 Save the installation file to your computer.
 #### Install the Game:
