@@ -81,3 +81,36 @@ Under the following terms:
 Attribution: If sharing or presenting the game, credit should be given to the creators and contributors.
 This assignment is subject to the academic policies and guidelines of my school. For more details, please refer to the instructions provided by my lecturer.
 
+
+
+
+# Design Documentation
+### Initial UI Screen: Check PDF VERSION OF README TO SEE PIC
+Below will be the UI Screen for when player is engaged in playing D1M3NS111ON game.
+Pause button is interactable:
+#### when player pressed on pause button while playing game, player would see:
+-Resume option
+-Options button
+-Exit button
+
+
+
+## Game Progress:
+#### Features that could not be implemented:
+#### Hazard 1: Toxic Gas
+I did try to implement a toxic gas by using a script and an empty game object, known as ToxicGasArea. The ToxicGasArea has a box collider component, and isTrigger is ticked. This is to allow the player to be affected by the unknown toxic gas when player stepped into a particular area. However, upon many attempts, I still couldn’t get my player HP to be affected, nor was my player’s screen becoming red to indicate the reduce in player’s HP and at times, player would pause. 
+After doing research, I was aware that it could perhaps be the time I set in the scripts, this means that the scripts can’t include a time = 0f otherwise player would automatically pause for no reason. However, even after modifying my scripts it still did not work. Hence I proceeded to do other features to avoid time consuming.
+#### HP health system to be affected
+HP health system can’t be affected despite various attempts to make it reduce when player experienced a hazard.
+#### Quest UI button on the bottom right
+Too time consuming especially with many issues faced at the initial stage of the game development
+
+## Issues faced:
+#### Gameplay disappear always
+#### Player could not move initially:
+Fixed it by reimporting all assets, refreshing the unity app, editing the player field in inspectors
+#### Creating objects
+#### Coding the right mechanism 
+Most of the time there are so many issues faced, which would lead to my Unity editor to be jammed and error would occur
+#### Constantly restarting the game development
+Due to the issues faced
