@@ -12,48 +12,30 @@ using UnityEngine;
 public class Coins : MonoBehaviour
 {
     private GameManager gameManager;
+    public int myScore = 5;
 
     private void Start()
     {
-        // Find the GameManager object and get its GameManager component
         gameManager = FindObjectOfType<GameManager>();
     }
-    /// <summary>
-    /// The score value that this collectible is worth.
-    /// </summary>
-    public int myScore = 5;
 
-
-    /// <summary>
-    /// Performs actions related to the collection of the collectible
-    /// </summary>
     public void Collected()
     {
-        // Destroy the collectible GameObject
         Destroy(gameObject);
-
-        // Notify the GameManager that a collectible has been collected
         if (gameManager != null)
         {
-            gameManager.CollectCollectible();
+            gameManager.CollectCollectible(); // Tell GameManager a collectible was collected
         }
     }
 
-    /// <summary>
-    /// Callback function for when a collision occurs
-    /// </summary>
-    /// <param name="collision">Collision event data</param>
-
-    //This happens when a product touches player:
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        // Check if the object that touched me has a 'Player' tag
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().IncreaseOverallScore(myScore);
-            Collected();
+            other.GetComponent<Player>().IncreaseOverallScore(myScore); // Increase player score
+            FindObjectOfType<CollectibleManager>().CollectCollectible(); // Notify CollectibleManager
+            Collected(); // Destroy the coin object
         }
-
     }
 }
 

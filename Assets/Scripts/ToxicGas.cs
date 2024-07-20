@@ -6,15 +6,17 @@ using UnityEngine.UI;
 
 public class ToxicGas : MonoBehaviour
 {
-    public GameObject redScreenPanel; // Assign the UI panel in the Inspector
+    public GameObject deathCanvas; // Reference to the DeathCanvas
     public float damagePerSecond = 10f; // Adjust as per your game's balance
     public float healthReductionInterval = 1f; // Interval in seconds for health reduction
 
     private PlayerHealth playerHealth;
+    private GameObject redScreenPanel; // Reference to the red screen panel
     private float timeSinceLastDamage = 0f;
 
     void Start()
     {
+        redScreenPanel = deathCanvas.transform.Find("redScreenPanel").gameObject;
         redScreenPanel.SetActive(false); // Initially hide the red screen panel
     }
 
@@ -59,11 +61,12 @@ public class ToxicGas : MonoBehaviour
 
     void SetRedScreenTransparency(int alpha)
     {
-        // Get the Image component of the UI panel
-        Image panelImage = redScreenPanel.GetComponent<Image>();
-        if (panelImage != null)
+        // Get the RectTransform component of the UI panel
+        RectTransform panelRectTransform = redScreenPanel.GetComponent<RectTransform>();
+        if (panelRectTransform != null)
         {
             // Set the alpha value of the color
+            Image panelImage = redScreenPanel.GetComponent<Image>();
             Color panelColor = panelImage.color;
             panelColor.a = alpha / 255f;
             panelImage.color = panelColor;

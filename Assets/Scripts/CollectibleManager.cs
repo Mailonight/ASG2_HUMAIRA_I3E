@@ -1,8 +1,9 @@
 /*
  * Author: Nur Humaira Binte Ahmad Nazim
  * Date: 10/05/2024
+ * UPDATED DATE: 07 JUL 24
  * Description: 
- * This script is about UI displaying the items left for player to collect.
+ * This script is about MANAGING THE COUNT OF COLLECTIBLES.
  */
 
 using UnityEngine;
@@ -10,14 +11,13 @@ using TMPro;
 
 public class CollectibleManager : MonoBehaviour
 {
-    public TextMeshProUGUI ItemsLeftTxt; // Changed variable name to match "ItemsLeftTxt"
-    private int totalCollectibles; // Total number of collectibles needed to be collected
-
+    public TextMeshProUGUI itemsLeftTxt;
+    private int totalCollectibles;
     private int collectedCollectibles = 0;
 
     private void Start()
     {
-        // Calculate the total number of collectibles in your scene dynamically
+        // Find all game objects with the "Collectible" tag and count them
         totalCollectibles = GameObject.FindGameObjectsWithTag("Collectible").Length;
         UpdateCollectiblesLeftUI();
     }
@@ -26,15 +26,11 @@ public class CollectibleManager : MonoBehaviour
     {
         collectedCollectibles++;
         UpdateCollectiblesLeftUI();
-        Debug.Log("Collectible collected. Total collected: " + collectedCollectibles);
     }
 
     private void UpdateCollectiblesLeftUI()
     {
-        // Calculate the number of remaining collectibles
         int remainingCollectibles = totalCollectibles - collectedCollectibles;
-
-        // Update the UI text to display the number of remaining collectibles
-        ItemsLeftTxt.text = "Items Left: " + remainingCollectibles.ToString(); // Updated text to "Items Left"
+        itemsLeftTxt.text = "Items Left: " + remainingCollectibles.ToString();
     }
 }

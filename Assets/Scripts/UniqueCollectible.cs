@@ -23,33 +23,21 @@ public class UniqueCollectible : MonoBehaviour
     /// </summary>
     public void Collected()
     {
-        // Destroy the attached GameObject
         Destroy(gameObject);
 
-        // Increase both unique score and overall score
         var player = FindObjectOfType<Player>();
         if (player != null)
         {
-            //calls the increaseuniquescore method of the player script
-            //passes the myScore value of the unique collectible as a parameter.
             player.IncreaseUniqueScore(myScore);
         }
     }
 
-    /// <summary>
-    /// Callback function for when a collision occurs
-    /// </summary>
-    /// <param name="collision">Collision event data</param>
-
-    //This happens when a product touches player:
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        //Check if the object that touched me has a 'Player' tag
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             Collected();
         }
-
     }
 }
 

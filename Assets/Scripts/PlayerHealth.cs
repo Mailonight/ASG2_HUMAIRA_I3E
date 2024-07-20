@@ -1,21 +1,57 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    public GameObject deathUI; // Reference to the death UI panel
-    public Text deathMessageText; //  Reference to a Text component for death message
-    public Image healthFillImage; // Reference to the UI Image component for health fill
+
+    public GameObject deathCanvas; // Reference to the death UI canvas
+    public GameObject hpCanvas;    // Reference to the health UI canvas
+    public Image healthFillImage;  // Reference to the UI Image component for health fill
+    public TextMeshProUGUI deathMessageText; // Reference to a TextMeshProUGUI component for death message
+    public GameObject redScreenPanel; // Reference to the red screen panel under deathCanvas
 
     private bool isDead = false;
     private float timeSinceLastDamage = 0f;
     private float damageInterval = 1f; // Interval in seconds for damage over time
 
+    void Awake()
+    {
+        // Find the "DeathCanvas" GameObject in the scene
+        GameObject foundDeathCanvas = GameObject.Find("DeathCanvas");
+
+        // Check if foundDeathCanvas is not null before assigning to deathCanvas
+        if (foundDeathCanvas != null)
+        {
+            deathCanvas = foundDeathCanvas;
+        }
+        else
+        {
+            // Log an error if "DeathCanvas" GameObject is not found
+            Debug.LogError("Failed to find GameObject named 'DeathCanvas'. Ensure it exists in the scene.");
+        }
+
+        // Check if healthFillImage is null before trying to get component
+        if (healthFillImage == null)
+        {
+            Debug.LogError("Health Fill Image reference not set in PlayerHealth script.");
+        }
+    }
+
     void Start()
     {
+        // Log to console to check if deathCanvas is assigned
+        Debug.Log("Death Canvas assigned: " + (deathCanvas != null));
+
+        // Ensure hpCanvas is active from the start if it needs to be
+        if (hpCanvas != null)
+        {
+            hpCanvas.SetActive(true);
+        }
+
         currentHealth = maxHealth;
         ToggleDeathUI(false); // Hide the death UI initially
 
@@ -25,18 +61,30 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogError("Health Fill Image reference not set in PlayerHealth script.");
         }
 
+        // Ensure deathCanvas reference is set
+        if (deathCanvas == null)
+        {
+            Debug.LogError("Death Canvas reference not set in PlayerHealth script.");
+        }
+
+        // Ensure death message text reference is set
+        if (deathMessageText == null)
+        {
+            Debug.LogError("Death Message Text reference not set in PlayerHealth script.");
+        }
+
         // Update health bar UI initially
         UpdateHealthBar();
     }
 
-    void Update() //need to check if our player is still alive , hence !isDead
+    void Update()
     {
-        if (!isDead) //still alive
+        if (!isDead)
         {
             // Damage over time while inside toxic gas
             if (timeSinceLastDamage >= damageInterval)
             {
-                TakeDamage(5); // Adjust damage amount as needed
+                TakeDamage(5);
                 timeSinceLastDamage = 0f;
             }
             else
@@ -45,6 +93,7 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -56,20 +105,15 @@ public class PlayerHealth : MonoBehaviour
         // Update health bar UI after taking damage
         UpdateHealthBar();
     }
-    public void RestoreHealth()
-    {
-        currentHealth = maxHealth;
 
-        // Update health bar UI after restoring health
-        UpdateHealthBar();
-    }
     void Die()
     {
         // Show death UI elements
         ToggleDeathUI(true);
         Time.timeScale = 0f; // Pause the game
-        isDead = true; //isdead to track is the player has died
+        isDead = true;
     }
+
     void UpdateHealthBar()
     {
         if (healthFillImage != null)
@@ -79,6 +123,13 @@ public class PlayerHealth : MonoBehaviour
             healthFillImage.fillAmount = fillAmount;
         }
     }
+
+    public void RestoreHealth()
+    {
+        currentHealth = maxHealth;
+        UpdateHealthBar();
+    }
+
     public void RestartLevel()
     {
         // Reload the current scene (restart the level)
@@ -95,18 +146,28 @@ public class PlayerHealth : MonoBehaviour
 
     void ToggleDeathUI(bool active)
     {
-        if (deathUI != null)
+        if (deathCanvas != null)
         {
-            deathUI.SetActive(active);
+            deathCanvas.SetActive(active);
 
-            if (active && deathMessageText != null)
+            if (active)
             {
-                deathMessageText.text = "You Died"; // Customize death message if needed
+                // Activate red screen panel under deathCanvas
+                if (redScreenPanel != null)
+                {
+                    redScreenPanel.SetActive(true);
+                }
+
+                // Set death message text
+                if (deathMessageText != null)
+                {
+                    deathMessageText.text = "YOU DIED! GAME OVER. PRESS PAUSE > EXIT.";
+                }
             }
         }
         else
         {
-            Debug.LogError("Death UI GameObject reference not set in PlayerHealth script.");
+            Debug.LogError("Death Canvas reference not set in PlayerHealth script.");
         }
     }
 }
