@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 40c24a1c2966d924a8b84723d2951eac
+  - enabled: 0
+    path: Assets/Scenes/Dimension2Hell.unity
+    guid: 005afd622d276c945913bd6380dd42cb
+  - enabled: 1
+    path: Assets/Scenes/HellDimension.unity
+    guid: 2b57b112947943a4bb7f790fd6b808dd
+  - enabled: 1
+    path: Assets/Scenes/WeirdDimension.unity
+    guid: 7ecd818461f93c04084cf0cc936098e4
   m_configObjects: {}

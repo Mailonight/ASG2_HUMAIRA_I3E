@@ -10,27 +10,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-
+/// <summary>
+/// Manages a countdown timer displayed on the UI.
+/// </summary>
 public class Timer : MonoBehaviour
 {
-    public TextMeshProUGUI timerText; //Correct data type of text. 
-    public float totalTime = 60f; // Total time in seconds
+    /// <summary>
+    /// Reference to the TextMeshProUGUI component used to display the timer.
+    /// </summary>
+    public TextMeshProUGUI timerText;
 
+    /// <summary>
+    /// Total time for the countdown in seconds.
+    /// </summary>
+    public float totalTime = 60f;
+
+    /// <summary>
+    /// Initializes the timer by starting the countdown coroutine.
+    /// </summary>
     private void Start()
     {
         StartCoroutine(StartTimer());
     }
 
+    /// <summary>
+    /// Coroutine that handles the countdown and updates the timer text.
+    /// </summary>
+    /// <returns>An IEnumerator to control the coroutine's execution.</returns>
     private IEnumerator StartTimer()
     {
         float timeRemaining = totalTime;
 
         while (timeRemaining > 0f)
         {
-            // Update timer text
+            // Update the timer display
             timerText.text = FormatTime(timeRemaining);
 
-            // Decrease time remaining
+            // Decrease the time remaining
             timeRemaining -= Time.deltaTime;
 
             yield return null;
@@ -40,6 +56,11 @@ public class Timer : MonoBehaviour
         Debug.Log("Time's up!");
     }
 
+    /// <summary>
+    /// Formats the given time in seconds into a MM:SS string format.
+    /// </summary>
+    /// <param name="timeInSeconds">Time in seconds to format.</param>
+    /// <returns>A formatted string representing the time in MM:SS format.</returns>
     private string FormatTime(float timeInSeconds)
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
